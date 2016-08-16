@@ -24,6 +24,7 @@ namespace FreeForum
         public Nullable<int> ParentId { get; set; }
         public int UserId { get; set; }
         public string Text { get; set; }
+        public System.DateTime PostDate { get; set; }
     
         public virtual ICollection<Message> Message1 { get; set; }
         public virtual Message Message2 { get; set; }

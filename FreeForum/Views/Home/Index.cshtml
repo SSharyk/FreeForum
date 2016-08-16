@@ -4,8 +4,11 @@
 
 <h2> Index </h2>
 
-Добро пожаловать на free-forum!
-Вы можете @Html.ActionLink("почитать беседы", "Index", "Conversation") 
-или @Html.ActionLink("создать новую", "Create", "Conversation")
+<p> Добро пожаловать на free-forum! </p>
+<p> Вы можете @Html.ActionLink("почитать беседы", "Index", "Conversation") </p>
+@if (FreeForum.Helpers.AuthHelper.IsAuthenticated(Context))
+{
+    <p> или @Html.ActionLink("создать новую", "Create", "Conversation") </p>
+}
 
 Общайтесь на здоровье!

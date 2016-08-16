@@ -30,6 +30,7 @@
           <Property Name="ParentId" Type="int" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="Text" Type="nvarchar" Nullable="false" MaxLength="512" />
+          <Property Name="PostDate" Type="datetime2" Nullable="false" />
         </EntityType>
         <EntityType Name="Subject">
           <Key>
@@ -118,6 +119,7 @@
           <NavigationProperty Name="Message2" Relationship="FreeForumModel.FK_Message_Message" FromRole="Message1" ToRole="Message" />
           <NavigationProperty Name="User" Relationship="FreeForumModel.FK_Message_Users" FromRole="Message" ToRole="Users" />
           <NavigationProperty Name="Subjects" Relationship="FreeForumModel.FK_Subject_Message" FromRole="Message" ToRole="Subject" />
+          <Property Type="DateTime" Name="PostDate" Nullable="false" Precision="7" />
         </EntityType>
         <EntityType Name="Subject">
           <Key>
@@ -184,6 +186,7 @@
           <EntitySetMapping Name="Messages">
             <EntityTypeMapping TypeName="FreeForumModel.Message">
               <MappingFragment StoreEntitySet="Message">
+                <ScalarProperty Name="PostDate" ColumnName="PostDate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ParentId" ColumnName="ParentId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />

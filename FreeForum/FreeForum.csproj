@@ -255,6 +255,7 @@
       <LastGenOutput>DataModel.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\addMessageForm.functions.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
@@ -290,6 +291,7 @@
     <Content Include="Views\Account\LogIn.cshtml" />
     <Content Include="Views\Conversation\Index.cshtml" />
     <Content Include="Views\Conversation\Read.cshtml" />
+    <Content Include="Views\Home\News.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

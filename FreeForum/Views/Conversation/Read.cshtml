@@ -8,9 +8,9 @@
 {
     int margin = (level * 5) + 2;
 
-    <div class="media" style="margin-left: @margin%">
+    <div class="media" style="margin-left: @margin%" id="C_@message.Id">
         <div class="media-left">
-            /// TODO: user avatar here
+            &nbsp;
         </div>
 
         <div class="media-body">
@@ -18,14 +18,17 @@
                 <div class="panel-heading">
                     <div class="author">@message.User.Login</div>
                     <div class="metadata">
-                        <span class="date">/// TODO: message date here</span>
+                        <span class="date">@message.PostDate</span>
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div class="media-text text-justify">@message.Text</div>
-                    <div class="pull-right">
-                        <a class="btn btn-info reply-button" href="#addMessageForm" id="@message.Id">Ответить</a>
-                    </div>
+                    <div class="media-text text-justify">@message.Text</div>                    
+                    @if (FreeForum.Helpers.AuthHelper.IsAuthenticated(Context))
+                    {
+                        <div class="pull-right">
+                            <a class="btn btn-info reply-button" href="#addMessageForm" id="@message.Id">Ответить</a>
+                        </div>                            
+                    }
                 </div>
             </div>
         </div>
@@ -40,12 +43,13 @@
 
 @helper RenderAddMessageForm(){
     var message = new FreeForum.FreeForumEntities().Messages.Find(Model.FirstMessageId);
-    
-    using (Html.BeginForm("Add", "Conversation", FormMethod.Post))
+
+    using (Html.BeginForm("Add", "Conversation", FormMethod.Post, new { id = "frmAddMessage" }))
     {
         @Html.ValidationSummary(true)
 
-        <input type="hidden" value="@message.Id" />
+        <input name="SubjectId" type="hidden" value="@Model.Id" />
+        <input id="ParentId" name="ParentId" type="hidden" />
 
         <div class="editor-field">
             <textarea cols="120" rows="5" name="Text" id="Text" placeholder="Введите здесь свой комментарий"></textarea>
@@ -70,3 +74,23 @@
 <p>
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+
+<style>
+    #frmAddMessage {
+        display: none;
+        clear: both;
+    }
+
+        #frmAddMessage input,
+        #frmAddMessage textarea {
+            float: right;
+            display: block;
+            width: 93%;
+        }
+
+    .media {
+        clear: both;
+    }
+</style>
+<script src="~/Scripts/addMessageForm.functions.js"></script>

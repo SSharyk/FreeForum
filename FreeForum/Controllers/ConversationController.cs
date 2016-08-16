@@ -26,12 +26,14 @@ namespace FreeForum.Controllers
         }
 
         [HttpPost]
-        public ActionResult Add(Message message)
+        public ActionResult Add(Message message, int SubjectId)
         {
             var ctx = new FreeForumEntities();
+            message.UserId = Helpers.AuthHelper.GetUser(HttpContext).Id;
+            message.PostDate = DateTime.Now;
             ctx.Messages.Add(message);
             ctx.SaveChanges();
-            return View();
+            return RedirectToAction("Read", new { index = SubjectId });
         }
     }
 }

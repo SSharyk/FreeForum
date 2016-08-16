@@ -23,5 +23,11 @@ namespace FreeForum.Controllers
         {
             return View(FreeForum.Models.DataBase.GetUsersList());
         }
+
+        [HttpGet]
+        public ActionResult News()
+        {
+            return View();
+        }
     }
 }
