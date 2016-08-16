@@ -1,0 +1,46 @@
+﻿@model FreeForum.Models.UserModel
+
+@{
+    ViewBag.Title = "LogIn";
+}
+
+<fieldset>
+    <legend>Регистрация </legend>
+    @using (Html.BeginForm("Registration", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {    
+        <div class="editor-label">
+            @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(m => m.Email, new { placeholder = "Адрес электронной почты", @class="x-large" })
+            @Html.ValidationMessageFor(m => m.Email)
+        </div>
+    
+        <div class="editor-label">
+            @Html.LabelFor(m => m.Login, new { @class = "control-label" })
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(m => m.Login, new { placeholder = "Логин", @class="x-large" })
+            @Html.ValidationMessageFor(m => m.Login)
+        </div>
+        
+        <div class="editor-label">
+            @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+        </div>
+        <div class="editor-field">
+            @Html.PasswordFor(m => m.Password, new { placeholder = "Пароль", @class="x-large" })
+            @Html.ValidationMessageFor(m => m.Password)
+        </div>
+    
+        <div class="editor-label">
+            @Html.LabelFor(m => m.PasswordConfirm, new { @class = "control-label" })
+        </div>
+        <div class="editor-field">
+            @Html.PasswordFor(m => m.PasswordConfirm, new { placeholder = "Повторите пароль", @class="x-large" })
+            @Html.ValidationMessageFor(m => m.PasswordConfirm)
+        </div>
+  
+        <hr />
+        <input type="submit" value="Регистрация!" />
+    }
+</fieldset>

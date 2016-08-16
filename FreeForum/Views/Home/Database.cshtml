@@ -1,0 +1,53 @@
+﻿@model IEnumerable<FreeForum.User>
+
+@{
+    ViewBag.Title = "Database";
+}
+
+<style>
+    table {
+        width: 70%;
+        margin: 30px 15%;
+    }
+    td,th {
+        width: 25%;
+        outline: 1px solid grey;
+    }
+</style>
+
+<h2>All users</h2>
+
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Login)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Password)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cookie)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Login)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Password)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cookie)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+    </tr>
+}
+
+</table>

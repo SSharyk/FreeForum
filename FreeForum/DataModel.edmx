@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище FreeForumModel" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="Хранилище FreeForumModelContainer">
+          <EntitySet Name="Message" EntityType="Хранилище FreeForumModel.Message" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Subject" EntityType="Хранилище FreeForumModel.Subject" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Users" EntityType="Хранилище FreeForumModel.Users" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Message_Message" Association="Хранилище FreeForumModel.FK_Message_Message">
+            <End Role="Message" EntitySet="Message" />
+            <End Role="Message1" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Users" Association="Хранилище FreeForumModel.FK_Message_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subject_Message" Association="Хранилище FreeForumModel.FK_Subject_Message">
+            <End Role="Message" EntitySet="Message" />
+            <End Role="Subject" EntitySet="Subject" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ParentId" Type="int" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nvarchar" Nullable="false" MaxLength="512" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="140" />
+          <Property Name="FirstMessageId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="70" />
+          <Property Name="Login" Type="nvarchar" Nullable="false" MaxLength="30" />
+          <Property Name="Password" Type="varchar" Nullable="false" MaxLength="32" />
+          <Property Name="Cookie" Type="varchar" MaxLength="128" />
+        </EntityType>
+        <Association Name="FK_Message_Message">
+          <End Role="Message" Type="Хранилище FreeForumModel.Message" Multiplicity="0..1" />
+          <End Role="Message1" Type="Хранилище FreeForumModel.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Users">
+          <End Role="Users" Type="Хранилище FreeForumModel.Users" Multiplicity="1" />
+          <End Role="Message" Type="Хранилище FreeForumModel.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subject_Message">
+          <End Role="Message" Type="Хранилище FreeForumModel.Message" Multiplicity="1" />
+          <End Role="Subject" Type="Хранилище FreeForumModel.Subject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Subject">
+              <PropertyRef Name="FirstMessageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FreeForumModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="FreeForumEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Messages" EntityType="FreeForumModel.Message" />
+          <EntitySet Name="Subjects" EntityType="FreeForumModel.Subject" />
+          <EntitySet Name="Users" EntityType="FreeForumModel.User" />
+          <AssociationSet Name="FK_Message_Message" Association="FreeForumModel.FK_Message_Message">
+            <End Role="Message" EntitySet="Messages" />
+            <End Role="Message1" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Users" Association="FreeForumModel.FK_Message_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subject_Message" Association="FreeForumModel.FK_Subject_Message">
+            <End Role="Message" EntitySet="Messages" />
+            <End Role="Subject" EntitySet="Subjects" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentId" Type="Int32" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="512" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Message1" Relationship="FreeForumModel.FK_Message_Message" FromRole="Message" ToRole="Message1" />
+          <NavigationProperty Name="Message2" Relationship="FreeForumModel.FK_Message_Message" FromRole="Message1" ToRole="Message" />
+          <NavigationProperty Name="User" Relationship="FreeForumModel.FK_Message_Users" FromRole="Message" ToRole="Users" />
+          <NavigationProperty Name="Subjects" Relationship="FreeForumModel.FK_Subject_Message" FromRole="Message" ToRole="Subject" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="140" Unicode="true" FixedLength="false" />
+          <Property Name="FirstMessageId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Message" Relationship="FreeForumModel.FK_Subject_Message" FromRole="Subject" ToRole="Message" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="32" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Messages" Relationship="FreeForumModel.FK_Message_Users" FromRole="Users" ToRole="Message" />
+          <Property Type="String" Name="Cookie" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Message_Message">
+          <End Role="Message" Type="FreeForumModel.Message" Multiplicity="0..1" />
+          <End Role="Message1" Type="FreeForumModel.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Users">
+          <End Role="Users" Type="FreeForumModel.User" Multiplicity="1" />
+          <End Role="Message" Type="FreeForumModel.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subject_Message">
+          <End Role="Message" Type="FreeForumModel.Message" Multiplicity="1" />
+          <End Role="Subject" Type="FreeForumModel.Subject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Subject">
+              <PropertyRef Name="FirstMessageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище FreeForumModelContainer" CdmEntityContainer="FreeForumEntities">
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="FreeForumModel.Message">
+              <MappingFragment StoreEntitySet="Message">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subjects">
+            <EntityTypeMapping TypeName="FreeForumModel.Subject">
+              <MappingFragment StoreEntitySet="Subject">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="FirstMessageId" ColumnName="FirstMessageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="FreeForumModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Cookie" ColumnName="Cookie" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

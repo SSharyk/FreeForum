@@ -1,0 +1,19 @@
+﻿@model IEnumerable<FreeForum.Subject>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<ul>
+    @foreach (var item in Model)
+    {
+        var text = new FreeForum.FreeForumEntities().Messages.Find(item.FirstMessageId).Text;
+        <li>@Html.ActionLink(text, "Read", "Conversation", new { index = item.Id }, null) </li>
+    }
+</ul>

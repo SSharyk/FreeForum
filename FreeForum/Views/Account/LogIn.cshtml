@@ -1,0 +1,32 @@
+﻿@model FreeForum.Models.UserModel
+
+@{
+    ViewBag.Title = "LogIn";
+}
+
+<h2>LogIn</h2>
+
+<fieldset>
+    <legend>Вход в систему</legend>
+    @using (Html.BeginForm("LogIn", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {       
+        <div class="editor-label">
+            @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(m => m.Email, new { placeholder = "Адрес электронной почты", @class="x-large" })
+            @*@Html.ValidationMessageFor(m => m.Email)*@
+        </div>
+        
+        <div class="editor-label">
+            @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+        </div>
+        <div class="editor-field">
+            @Html.PasswordFor(m => m.Password, new { placeholder = "Пароль", @class="x-large" })
+            @*@Html.ValidationMessageFor(m => m.Password)*@
+        </div>   
+  
+        <hr />
+        <input type="submit" value="Войти в систему" />
+    }
+</fieldset>
