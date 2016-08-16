@@ -1,0 +1,9 @@
+FreeForum/bin
+FreeForum/obj
+packages/
+.vs/
+*.js
+*.map
+*.orig
+FreeForum/logs/
+FreeForum/App_Data/
