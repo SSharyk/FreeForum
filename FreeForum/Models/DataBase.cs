@@ -39,7 +39,6 @@ namespace FreeForum.Models
         public static User GetUser(string email, string password)
         {
             User user = _entity.Users.FirstOrDefault(u => u.Email == email && u.Password == password);
-            _entity.Dispose();
             return user;
         }
         /// <summary>
