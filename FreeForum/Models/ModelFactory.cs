@@ -28,5 +28,26 @@ namespace FreeForum.Models
             return user;
         }
         #endregion
+
+        #region create/parse Subject
+        public static NewSubjectModel Create(Subject subject)
+        {
+            var model = new NewSubjectModel
+            {
+                Title = subject.Title,
+                MessageText = new FreeForumEntities().Messages.Find(subject.Id).Text
+            };
+            return model;
+        }
+
+        public static Subject Parse(NewSubjectModel model)
+        {
+            Subject subject = new Subject
+            {
+                Title = model.Title
+            };
+            return subject;
+        }
+        #endregion
     }
 }

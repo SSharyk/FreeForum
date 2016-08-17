@@ -1,0 +1,31 @@
+﻿@model FreeForum.Models.NewSubjectModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Создать новую беседу</h2>
+
+<fieldset>
+    @using (Html.BeginForm("Create", "Conversation", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {    
+        <div class="editor-label">
+            @Html.LabelFor(m => m.Title, new { @class = "control-label" })
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(m => m.Title, new { placeholder = "Название беседы", @class = "x-large" })
+            @Html.ValidationMessageFor(m => m.Title)
+        </div>
+        
+        <div class="editor-label">
+            @Html.LabelFor(m => m.MessageText, new { @class = "control-label" })
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(m => m.MessageText, 5, 80, new { placeholder = "Текст сообщения", @class = "x-large" })
+            @Html.ValidationMessageFor(m => m.MessageText)
+        </div>
+                  
+        <hr />
+        <input type="submit" value="Создать" />
+    }
+</fieldset>

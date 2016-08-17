@@ -21,7 +21,7 @@ namespace FreeForum.Controllers
         [CustomAttributes.Role(IsNeedAuthorized = true, IsNeedAdmin = true)]
         public ActionResult Database()
         {
-            return View(FreeForum.Models.DataBase.GetUsersList());
+            return View(FreeForum.Models.DataBase.GetUsers());
         }
 
         [HttpGet]

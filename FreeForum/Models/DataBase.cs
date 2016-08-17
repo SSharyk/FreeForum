@@ -7,6 +7,8 @@ namespace FreeForum.Models
 {
     public class DataBase
     {
+        private static FreeForumEntities _entity = new FreeForumEntities();
+
         #region Пользователи
         /// <summary>
         /// Определяет пользователяей по кукам
@@ -15,8 +17,7 @@ namespace FreeForum.Models
         /// <returns>Пользователь с заданными куками или null</returns>
         public static User GetUserByCookie(string cookie)
         {
-            FreeForumEntities entity = new FreeForumEntities();
-            return entity.Users.FirstOrDefault(user => user.Cookie == cookie);
+            return _entity.Users.FirstOrDefault(user => user.Cookie == cookie);
         }
 
         /// <summary>
@@ -26,8 +27,7 @@ namespace FreeForum.Models
         /// <returns>Пользователь с заданным адресом или null</returns>
         public static User GetUser(string email)
         {
-            var entity = new FreeForumEntities();
-            var users = entity.Users.Where(us => us.Email == email);
+            var users = _entity.Users.Where(us => us.Email == email);
             return (users.Count() > 0) ? users.FirstOrDefault() : null;
         }
         /// <summary>
@@ -38,9 +38,8 @@ namespace FreeForum.Models
         /// <returns>Пользователь с заданными значениями параметров или null</returns>
         public static User GetUser(string email, string password)
         {
-            var entity = new FreeForumEntities();
-            User user = entity.Users.FirstOrDefault(u => u.Email == email && u.Password == password);
-            entity.Dispose();
+            User user = _entity.Users.FirstOrDefault(u => u.Email == email && u.Password == password);
+            _entity.Dispose();
             return user;
         }
         /// <summary>
@@ -50,8 +49,7 @@ namespace FreeForum.Models
         /// <returns>Коллекция пользователей с заданным логином или null</returns>
         public static IEnumerable<User> GetUsersByLogin(string login)
         {
-            var entity = new FreeForumEntities();
-            var users = entity.Users.Where(us => us.Login == login);
+            var users = _entity.Users.Where(us => us.Login == login);
             return users;
         }
 
@@ -61,45 +59,59 @@ namespace FreeForum.Models
         /// <param name="user">Добавляемый объект</param>
         public static void AddUser(User user)
         {
-            var entity = new FreeForumEntities();
-            entity.Users.Add(user);
-            entity.SaveChanges();
+            _entity.Users.Add(user);
+            _entity.SaveChanges();
         }
 
-        public static IEnumerable<User> GetUsersList()
+        public static IEnumerable<User> GetUsers()
         {
-            return new FreeForumEntities().Users;
+            return _entity.Users;
         }
 
         public static void RemoveCookie(User user)
         {
-            var entity = new FreeForumEntities();
             try
             {
-                entity.Users.Find(user.Id).Cookie = "";
+                _entity.Users.Find(user.Id).Cookie = "";
             }
                 /// TODO: Logger
             catch (Exception) { }
-            entity.SaveChanges();
+            _entity.SaveChanges();
+        }
+        #endregion
+
+        #region Беседы
+        public static IEnumerable<Subject> GetSubjects(Func<Subject, bool> predicate = null)
+        {
+            if (predicate == null) predicate = subj => true;
+            return _entity.Subjects; //.Where(predicate).AsEnumerable();
+        }
+
+        public static int AddSubject(Subject subject)
+        {
+            var added = _entity.Subjects.Add(subject);
+            _entity.SaveChanges();
+            return added.Id;
         }
         #endregion
 
         #region Сообщения
-        public static IEnumerable<Subject> GetSubjects(Func<Subject, bool> predicate = null)
-        {
-            if (predicate == null) predicate = subj => true;
-            return new FreeForumEntities().Subjects; //.Where(predicate).AsEnumerable();
-        }
-
         public static Message GetMessage(int id)
         {
-            return new FreeForumEntities().Messages.Find(id); //.Where(predicate).AsEnumerable();
+            return _entity.Messages.Find(id); //.Where(predicate).AsEnumerable();
         }
 
         public static IEnumerable<Message> GetMessages(Func<Message, bool> predicate = null)
         {
             if (predicate == null) predicate = mes => true;
-            return new FreeForumEntities().Messages.AsEnumerable(); //.Where(predicate).AsEnumerable();
+            return _entity.Messages.AsEnumerable(); //.Where(predicate).AsEnumerable();
+        }
+
+        public static int AddMessage(Message message)
+        {
+            message = _entity.Messages.Add(message);
+            _entity.SaveChanges();
+            return message.Id;
         }
         #endregion 
     }

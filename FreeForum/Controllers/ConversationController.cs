@@ -35,5 +35,33 @@ namespace FreeForum.Controllers
             ctx.SaveChanges();
             return RedirectToAction("Read", new { index = SubjectId });
         }
+
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create(Models.NewSubjectModel subjectModel)
+        {
+            var message = new Message
+            {
+                Text = subjectModel.MessageText,
+                UserId = Helpers.AuthHelper.GetUser(HttpContext).Id,
+                ParentId = null,
+                PostDate = DateTime.Now
+            };
+            int messageId = Models.DataBase.AddMessage(message);
+
+            Subject subject = new Subject
+            {
+                FirstMessageId = messageId,
+                Title = subjectModel.Title
+            };
+            int index = Models.DataBase.AddSubject(subject);
+
+            return RedirectToAction("Read", new { index = index });
+        }
     }
 }
